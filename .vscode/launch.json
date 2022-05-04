@@ -1,0 +1,24 @@
+{
+  // Use o IntelliSense para saber mais sobre os atributos possíveis.
+  // Focalizar para exibir as descrições dos atributos existentes.
+  // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Server",
+      "presentation": {
+        "hidden": false,
+        "group": "Other",
+        "order": 2
+      },
+      "preLaunchTask": "npm: watch",
+      // "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "./dist/server.js",
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+}

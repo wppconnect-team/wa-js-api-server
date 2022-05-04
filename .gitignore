@@ -1,0 +1,6 @@
+*.tgz
+/.idea
+/debug.log
+/dist/
+/logs
+/node_modules
