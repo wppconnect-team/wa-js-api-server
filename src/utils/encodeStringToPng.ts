@@ -27,35 +27,38 @@ function ord(a: string) {
   return 56320 <= e && 57343 >= e ? e : e;
 }
 
-export function encodeStringToPng(a: string) {
-  if (a.length) {
-    const c = a.length,
-      width = Math.ceil(Math.sqrt(c / 3)),
-      height = width,
-      canvas = createCanvas(width, height),
-      h = canvas.getContext('2d');
-    let j = h.getImageData(0, 0, width, height),
-      k = j.data,
-      l = 0;
-    for (let m = 0; m < height; m++)
-      for (let n = 0; n < width; n++) {
-        const o = 4 * (m * width) + 4 * n,
-          p = a[l++],
-          q = a[l++],
-          r = a[l++];
-        (p || q || r) &&
-          (p && (k[o] = ord(p)),
-          q && (k[o + 1] = ord(q)),
-          r && (k[o + 2] = ord(r)),
-          (k[o + 3] = 255));
-      }
-
-    h.putImageData(j, 0, 0);
-
-    const buffer = canvas.toBuffer('image/png');
-
-    return buffer;
+export function encodeStringToPng(content: string) {
+  if (!content.length) {
+    return Buffer.from('');
   }
 
-  return Buffer.from('');
+  const length = content.length;
+  const width = Math.ceil(Math.sqrt(length / 3));
+  const height = width;
+  const canvas = createCanvas(width, height);
+  const context = canvas.getContext('2d');
+  const imageData = context.getImageData(0, 0, width, height);
+  const data = imageData.data;
+
+  let l = 0;
+  for (let m = 0; m < height; m++)
+    for (let n = 0; n < width; n++) {
+      const o = 4 * (m * width) + 4 * n;
+      const red = content[l++];
+      const green = content[l++];
+      const blue = content[l++];
+
+      if (red || green || blue) {
+        red && (data[o] = ord(red));
+        green && (data[o + 1] = ord(green));
+        blue && (data[o + 2] = ord(blue));
+        data[o + 3] = 255;
+      }
+    }
+
+  context.putImageData(imageData, 0, 0);
+
+  const buffer = canvas.toBuffer('image/png');
+
+  return buffer;
 }
