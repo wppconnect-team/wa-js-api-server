@@ -17,14 +17,27 @@
 import fetch from 'cross-fetch';
 import { Response } from 'express';
 import { getLinkPreview } from 'link-preview-js';
-import { Controller, Get, QueryParam, Res } from 'routing-controllers';
+import {
+  Controller,
+  Get,
+  HeaderParam,
+  QueryParam,
+  Res,
+} from 'routing-controllers';
 
 import { encodeStringToPng } from '../utils/encodeStringToPng';
 
 @Controller('/v1/link-preview')
 export class LinkPreviewController {
-  protected async getData(url: string) {
-    const preview = await getLinkPreview(url);
+  protected async fetchLinkPreviewData(
+    url: string,
+    acceptLanguage = 'en-US,en'
+  ) {
+    const preview = await getLinkPreview(url, {
+      headers: {
+        'Accept-Language': acceptLanguage,
+      },
+    });
 
     if (!preview || !('title' in preview)) {
       return null;
@@ -41,15 +54,22 @@ export class LinkPreviewController {
   }
 
   @Get('/fetch-data.json')
-  async fetchJson(@QueryParam('url') url: string) {
-    const preview = await this.getData(url);
+  async fetchJson(
+    @QueryParam('url') url: string,
+    @HeaderParam('Accept-Language') acceptLanguage = 'en-US,en'
+  ) {
+    const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
 
     return preview;
   }
 
   @Get('/fetch-data.png')
-  async fetchPng(@QueryParam('url') url: string, @Res() response: Response) {
-    const preview = await this.getData(url);
+  async fetchPng(
+    @QueryParam('url') url: string,
+    @HeaderParam('Accept-Language') acceptLanguage = 'en-US,en',
+    @Res() response: Response
+  ) {
+    const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
 
     const stringenc = JSON.stringify(preview).replace(
       /[\u007F-\uFFFF]/g,
