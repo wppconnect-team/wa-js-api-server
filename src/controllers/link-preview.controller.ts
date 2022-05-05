@@ -21,11 +21,11 @@ import {
   Controller,
   Get,
   HeaderParam,
-  NotFoundError,
   QueryParam,
   Res,
 } from 'routing-controllers';
 
+import { HttpException } from '../exceptions/HttpException';
 import { encodeStringToPng } from '../utils/encodeStringToPng';
 
 @Controller('/v1/link-preview')
@@ -61,7 +61,7 @@ export class LinkPreviewController {
     const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
 
     if (!preview) {
-      throw new NotFoundError(`Preview link not found for "${url}"`);
+      throw new HttpException(404, `Preview link not found for "${url}"`);
     }
 
     return preview;
@@ -98,6 +98,10 @@ export class LinkPreviewController {
     @Res() response: Response
   ) {
     const data = await fetch(url);
+
+    if (!data.ok) {
+      throw new HttpException(404, `image not found for "${url}"`);
+    }
 
     const arrayBuffer = await data.arrayBuffer();
 
