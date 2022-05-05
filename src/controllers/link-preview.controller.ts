@@ -21,6 +21,7 @@ import {
   Controller,
   Get,
   HeaderParam,
+  NotFoundError,
   QueryParam,
   Res,
 } from 'routing-controllers';
@@ -29,10 +30,9 @@ import { encodeStringToPng } from '../utils/encodeStringToPng';
 
 @Controller('/v1/link-preview')
 export class LinkPreviewController {
-  protected async fetchLinkPreviewData(
-    url: string,
-    acceptLanguage = 'en-US,en'
-  ) {
+  protected async fetchLinkPreviewData(url: string, acceptLanguage?: string) {
+    acceptLanguage = acceptLanguage || 'en-US,en';
+
     const preview = await getLinkPreview(url, {
       headers: {
         'Accept-Language': acceptLanguage,
@@ -56,9 +56,13 @@ export class LinkPreviewController {
   @Get('/fetch-data.json')
   async fetchJson(
     @QueryParam('url') url: string,
-    @HeaderParam('Accept-Language') acceptLanguage = 'en-US,en'
+    @HeaderParam('Accept-Language') acceptLanguage?: string
   ) {
     const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
+
+    if (!preview) {
+      throw new NotFoundError(`Preview link not found for "${url}"`);
+    }
 
     return preview;
   }
@@ -66,10 +70,10 @@ export class LinkPreviewController {
   @Get('/fetch-data.png')
   async fetchPng(
     @QueryParam('url') url: string,
-    @HeaderParam('Accept-Language') acceptLanguage = 'en-US,en',
-    @Res() response: Response
+    @Res() response: Response,
+    @HeaderParam('Accept-Language') acceptLanguage?: string
   ) {
-    const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
+    const preview = await this.fetchJson(url, acceptLanguage);
 
     const stringenc = JSON.stringify(preview).replace(
       /[\u007F-\uFFFF]/g,
