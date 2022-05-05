@@ -31,19 +31,24 @@ export class LinkPreviewController {
     }
 
     return {
-      ...preview,
+      url: preview.url,
+      title: preview.title,
+      description: preview.description,
+      mediaType: preview.mediaType,
+      contentType: preview.contentType,
+      image: preview.images[0] || preview.favicons[0],
     };
   }
 
-  @Get('.json')
-  async json(@QueryParam('url') url: string) {
+  @Get('/fetch-data.json')
+  async fetchJson(@QueryParam('url') url: string) {
     const preview = await this.getData(url);
 
     return preview;
   }
 
-  @Get('.png')
-  async png(@QueryParam('url') url: string, @Res() response: Response) {
+  @Get('/fetch-data.png')
+  async fetchPng(@QueryParam('url') url: string, @Res() response: Response) {
     const preview = await this.getData(url);
 
     const stringenc = JSON.stringify(preview).replace(
@@ -63,8 +68,11 @@ export class LinkPreviewController {
     return response.end(buffer);
   }
 
-  @Get('/download')
-  async download(@QueryParam('url') url: string, @Res() response: Response) {
+  @Get('/download-image')
+  async downloadImage(
+    @QueryParam('url') url: string,
+    @Res() response: Response
+  ) {
     const data = await fetch(url);
 
     const arrayBuffer = await data.arrayBuffer();
