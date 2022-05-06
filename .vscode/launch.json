@@ -18,7 +18,8 @@
       "runtimeArgs": [
         "./dist/server.js",
       ],
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
     }
   ],
 }
