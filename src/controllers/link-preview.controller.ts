@@ -26,7 +26,7 @@ import {
 } from 'routing-controllers';
 
 import { HttpException } from '../exceptions/HttpException';
-import { encodeStringToPng } from '../utils/encodeStringToPng';
+import { encodeToPng } from '../utils/encodeToPng';
 
 @Controller('/v1/link-preview')
 export class LinkPreviewController {
@@ -75,14 +75,7 @@ export class LinkPreviewController {
   ) {
     const preview = await this.fetchJson(url, acceptLanguage);
 
-    const stringenc = JSON.stringify(preview).replace(
-      /[\u007F-\uFFFF]/g,
-      function (chr) {
-        return '\\u' + ('0000' + chr.charCodeAt(0).toString(16)).substr(-4);
-      }
-    );
-
-    const buffer = encodeStringToPng(stringenc);
+    const buffer = encodeToPng(JSON.stringify(preview));
 
     response.writeHead(200, {
       'Content-Type': 'image/png',
