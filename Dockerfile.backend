@@ -4,6 +4,8 @@ LABEL version="1.0.0" description="WPPconnectLinkPreview" maintainer="Alan Marti
 
 RUN mkdir -p /home/wa-js-api-server
 
+WORKDIR /home/wa-js-api-server
+
 RUN apt-get update && \
 	apt-get upgrade -y && \
 	apt-get install -y \
@@ -12,13 +14,11 @@ RUN apt-get update && \
 	yarn \
 	wget
 
-RUN cd /home/wa-js-api-server && \
-	git clone https://github.com/wppconnect-team/wa-js-api-server.git . && \
-	git pull && \
+COPY . .
+
+RUN git pull && \
 	npm install && \
 	npm run build
-
-WORKDIR /home/wa-js-api-server
 
 EXPOSE 8000/tcp
 
