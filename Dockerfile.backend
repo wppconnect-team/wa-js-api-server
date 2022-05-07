@@ -12,10 +12,8 @@ RUN apt-get update && \
 	yarn \
 	wget
 
-ADD . /home/wa-js-api-server
-
 RUN cd /home/wa-js-api-server && \
-	#git clone https://github.com/wppconnect-team/wa-js-api-server.git . && \
+	git clone https://github.com/wppconnect-team/wa-js-api-server.git . && \
 	git pull && \
 	npm install && \
 	npm run build

@@ -82,7 +82,7 @@ docker build -t wppconnect-team/wa-js-api-server:1.0.0 -f Dockerfile.backend .
 # if you want to change some setting you can set ENVIRONMENT variables
 docker run -d -p 8000:8000 --name WPPconnectLinkPreview \
   --restart=always \
-	-v ${PWD}:/home/WPPconnectLinkPreview \
+	-v ${PWD}:/home/wa-js-api-server \
 	-e NODE_ENV: production
 	-e PORT: 8000
 	-e LOG_FORMAT: combined
