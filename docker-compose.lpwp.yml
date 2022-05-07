@@ -9,8 +9,8 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     restart: always
-    #volumes:
-    #  - .:/home/wa-js
+    volumes:
+      - .:/home/wa-js
     environment:
       NODE_ENV: production
       PORT: 8000
