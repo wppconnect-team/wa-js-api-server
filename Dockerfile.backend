@@ -2,7 +2,7 @@ FROM node:16.14-slim
 
 LABEL version="1.0.0" description="WPPconnectLinkPreview" maintainer="Alan Martines<alancpmartines@hotmail.com>"
 
-RUN mkdir -p /home/WPPconnectLinkPreview
+RUN mkdir -p /home/wa-js-api-server
 
 RUN apt-get update && \
 	apt-get upgrade -y && \
@@ -12,13 +12,15 @@ RUN apt-get update && \
 	yarn \
 	wget
 
-RUN cd /home/WPPconnectLinkPreview && \
-	git clone https://github.com/wppconnect-team/wa-js-api-server.git . && \
+ADD . /home/wa-js-api-server
+
+RUN cd /home/wa-js-api-server && \
+	#git clone https://github.com/wppconnect-team/wa-js-api-server.git . && \
 	git pull && \
 	npm install && \
 	npm run build
 
-WORKDIR /home/WPPconnectLinkPreview
+WORKDIR /home/wa-js-api-server
 
 EXPOSE 8000/tcp
 
