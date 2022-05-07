@@ -90,6 +90,24 @@ export class LinkPreviewController {
     @QueryParam('url') url: string,
     @Res() response: Response
   ) {
+    const head = await fetch(url, {
+      method: 'HEAD',
+    });
+
+    if (!head.ok) {
+      throw new HttpException(404, `URL "${url}" was not found`);
+    }
+
+    const mimeType =
+      head.headers.get('content-type') || 'application/octet-stream';
+
+    if (!/^image\//.test(mimeType)) {
+      throw new HttpException(
+        400,
+        `The content of "${url}" is not an image, current mime type: "${mimeType}"`
+      );
+    }
+
     const data = await fetch(url);
 
     if (!data.ok) {
