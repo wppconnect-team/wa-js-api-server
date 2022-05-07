@@ -1,5 +1,5 @@
 {
-  "name": "wa-js-api-server",
+  "name": "@wppconnect/wa-js-api-server",
   "version": "1.0.0",
   "description": "",
   "license": "Apache-2.0",
@@ -19,6 +19,7 @@
     "lint": "npx eslint --ext .ts src",
     "prepare": "husky install && npm run clean && npm run build",
     "release": "release-it",
+    "start": "node ./dist/server.js",
     "watch": "tsc -w"
   },
   "dependencies": {
