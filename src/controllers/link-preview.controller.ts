@@ -26,12 +26,32 @@ import {
 } from 'routing-controllers';
 
 import { HttpException } from '../exceptions/HttpException';
+import { cache } from '../utils/cache';
 import { encodeToPng } from '../utils/encodeToPng';
+
+interface LinkPreviewData {
+  url: string;
+  originalUrl: string;
+  title: string;
+  description?: string;
+  mediaType: string;
+  contentType?: string;
+  image?: string;
+}
 
 @Controller('/v1/link-preview')
 export class LinkPreviewController {
-  protected async fetchLinkPreviewData(url: string, acceptLanguage?: string) {
+  protected async fetchLinkPreviewData(
+    url: string,
+    acceptLanguage?: string
+  ): Promise<LinkPreviewData | null> {
     acceptLanguage = acceptLanguage || 'en-US,en';
+
+    const key = `${url} - ${acceptLanguage}`;
+
+    if (cache.has(key)) {
+      return cache.get<LinkPreviewData>(key) || null;
+    }
 
     const preview = await getLinkPreview(url, {
       headers: {
@@ -43,14 +63,19 @@ export class LinkPreviewController {
       return null;
     }
 
-    return {
+    const result = {
       url: preview.url,
+      originalUrl: url,
       title: preview.title,
       description: preview.description,
       mediaType: preview.mediaType,
       contentType: preview.contentType,
       image: preview.images[0] || preview.favicons[0],
     };
+
+    cache.set(key, result);
+
+    return result;
   }
 
   @Get('/fetch-data.json')

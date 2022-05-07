@@ -16,7 +16,7 @@
 
 import { config } from 'dotenv';
 import { expand } from 'dotenv-expand';
-import { cleanEnv, port, str } from 'envalid';
+import { cleanEnv, num, port, str } from 'envalid';
 
 expand(config({ path: `.env` }));
 expand(config({ path: `.env.local` }));
@@ -25,11 +25,23 @@ expand(config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` }));
 expand(config());
 
 const env = cleanEnv(process.env, {
-  NODE_ENV: str({ default: 'development' }),
-  LOG_FORMAT: str({ default: 'combined' }),
-  PORT: port({ default: 8000 }),
+  CACHE_MAX_ITEMS: num({ default: 5000 }),
+  CACHE_MAX_SIZE: num({ default: 100 * 1024 * 1024 }), // 100MB
+  CACHE_TTL: num({ default: 60 * 60 * 1000 }), // 1 hour
   LOG_DIR: str({ default: './logs' }),
+  LOG_FORMAT: str({ default: 'combined' }),
+  NODE_ENV: str({ default: 'development' }),
   ORIGIN: str({ default: 'https://web.whatsapp.com' }),
+  PORT: port({ default: 8000 }),
 });
 
-export const { LOG_DIR, LOG_FORMAT, NODE_ENV, ORIGIN, PORT } = env;
+export const {
+  CACHE_MAX_ITEMS,
+  CACHE_MAX_SIZE,
+  CACHE_TTL,
+  LOG_DIR,
+  LOG_FORMAT,
+  NODE_ENV,
+  ORIGIN,
+  PORT,
+} = env;
