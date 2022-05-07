@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 services:
   backend:
     container_name: WPPconnectLinkPreview
@@ -7,7 +7,7 @@ services:
     image: wppconnect-team/wa-js-api-server:1.0.0
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: Dockerfile
     restart: always
     environment:
       NODE_ENV: production
@@ -20,8 +20,7 @@ services:
       CACHE_TTL: ${CACHE_TTL:-3600000}
     ports:
       - ${PORT:-8000}:8000
-
 #
 # docker-compose up -d
-# docker-compose -f docker-compose.lpwp.yml up --build -d
+# docker-compose -f docker-compose.yml up --build -d
 #
