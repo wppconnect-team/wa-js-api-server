@@ -1,6 +1,6 @@
 FROM node:16.14-slim
 
-LABEL version="1.0.0" description="WPPconnectLinkPreview" maintainer="Alan Martines<alancpmartines@hotmail.com>"
+LABEL version="1.0.0" description="WPPConnectLinkPreview" maintainer="Alan Martines<alancpmartines@hotmail.com>"
 
 RUN mkdir -p /home/wa-js-api-server
 

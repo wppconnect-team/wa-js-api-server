@@ -76,7 +76,7 @@ git clone https://github.com/wppconnect-team/wa-js-api-server.git
 cd wa-js-api-server
 
 # create image
-docker build -t wppconnect-team/wa-js-api-server:1.0.0 -f Dockerfile .
+docker build -t wppconnect/wa-js-api-server:1.0.0 -f Dockerfile .
 
 # create container
 # if you want to change some setting you can set ENVIRONMENT variables
@@ -90,7 +90,7 @@ docker run -d -p 8000:8000 --name WPPconnectLinkPreview \
 	-e CACHE_MAX_ITEMS=500 \
 	-e CACHE_MAX_SIZE=104857600 \
 	-e CACHE_TTL=3600000 \
-wppconnect-team/wa-js-api-server:1.0.0
+wppconnect/wa-js-api-server:1.0.0
 ```
 
 ## License

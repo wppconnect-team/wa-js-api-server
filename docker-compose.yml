@@ -4,7 +4,7 @@ services:
     container_name: WPPconnectLinkPreview
     hostname: WPPconnectLinkPreview
     network_mode: bridge
-    image: wppconnect-team/wa-js-api-server:1.0.0
+    image: wppconnect/wa-js-api-server:1.0.0
     build:
       context: .
       dockerfile: Dockerfile
