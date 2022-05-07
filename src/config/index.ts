@@ -29,9 +29,7 @@ const env = cleanEnv(process.env, {
   LOG_FORMAT: str({ default: 'combined' }),
   PORT: port({ default: 8000 }),
   LOG_DIR: str({ default: './logs' }),
+  ORIGIN: str({ default: 'https://web.whatsapp.com' }),
 });
 
-export const CREDENTIALS = process.env.CREDENTIALS === 'true';
-
-export const { SECRET_KEY, ORIGIN } = process.env;
-export const { NODE_ENV, PORT, LOG_FORMAT, LOG_DIR } = env;
+export const { LOG_DIR, LOG_FORMAT, NODE_ENV, ORIGIN, PORT } = env;
