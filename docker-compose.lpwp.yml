@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  backend:
+    container_name: WPPconnectLinkPreview
+    hostname: WPPconnectLinkPreview
+    network_mode: bridge
+    image: alanmartines/wa-js-api-server:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: always
+    #volumes:
+    #  - .:/home/wa-js
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      LOG_FORMAT: ${LOG_FORMAT:-'combined'}
+      LOG_DIR: ${LOG_DIR:-'./logs'}
+      ORIGIN: ${ORIGIN:-'https://web.whatsapp.com'}
+      CACHE_MAX_ITEMS: ${CACHE_MAX_ITEMS:-500}
+      CACHE_MAX_SIZE: ${CACHE_MAX_SIZE:-104857600}
+      CACHE_TTL: ${CACHE_TTL:-3600000}
+    ports:
+      - ${PORT:-8000}:8000
+
+#
+# docker-compose up -d
+# docker-compose -f docker-compose.lpwp.yml up --build -d
