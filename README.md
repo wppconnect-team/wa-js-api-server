@@ -50,6 +50,48 @@ npm run build
 node ./dist/server.js
 ```
 
+## Docker-Compose
+
+```bash
+# checkout the project
+git clone https://github.com/wppconnect-team/wa-js-api-server.git
+
+# enter in the folder
+cd wa-js-api-server
+
+# if you want to change some configuration, you can set en ENVIRONMENT variables or copy the .env to .env.local
+# cp .env .env.local
+
+# create container
+docker-compose -f docker-compose.lpwp.yml up --build -d
+```
+
+## Dockerfile
+
+```bash
+# checkout the project
+git clone https://github.com/wppconnect-team/wa-js-api-server.git
+
+# enter in the folder
+cd wa-js-api-server
+
+# create image
+docker build -t wppconnect-team/wa-js-api-server:1.0.0 -f Dockerfile.backend .
+
+# create container
+# if you want to change some setting you can set ENVIRONMENT variables
+docker run -d -p 8000:8000 --name WPPconnectLinkPreview \
+  --restart=always \
+	-e NODE_ENV=production \
+	-e PORT=8000 \
+	-e LOG_FORMAT=combined \
+	-e LOG_DIR='./logs' \
+	-e ORIGIN='https://web.whatsapp.com' \
+	-e CACHE_MAX_ITEMS=500 \
+	-e CACHE_MAX_SIZE=104857600 \
+	-e CACHE_TTL=3600000 \
+wppconnect-team/wa-js-api-server:1.0.0
+  ```
 ## License
 
 Copyright 2021 WPPConnect Team
