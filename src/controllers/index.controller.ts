@@ -20,8 +20,7 @@ import { Controller, Get } from 'routing-controllers';
 export class IndexController {
   @Get('/')
   index() {
-    //return 'OK';
-		res.sendFile(path.join(__dirname, '../views/index.html'));
+    return 'OK';
   }
 
   @Get('/status')
