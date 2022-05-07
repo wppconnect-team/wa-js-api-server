@@ -43,6 +43,9 @@ npm install
 # build javascript files
 npm run build
 
+# if you want to change some configuration, you can set en ENVIRONMENT variables or copy the .env to .env.local
+# cp .env .env.local
+
 # lauch local server
 node ./dist/server.js
 ```
