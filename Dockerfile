@@ -1,24 +1,46 @@
-FROM node:16.14-slim
+### base image
+# Create an intermediate image for build speed with production dependencies
+FROM node:16.14-slim as base
 
-LABEL version="1.0.0" description="WPPConnectLinkPreview" maintainer="Alan Martines<alancpmartines@hotmail.com>"
-
-RUN mkdir -p /home/wa-js-api-server
+RUN mkdir -p /home/wa-js-api-server && \
+	mkdir -p /home/wa-js-api-server/logs
 
 WORKDIR /home/wa-js-api-server
 
-RUN apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install -y \
-	git \
-	curl \
-	yarn \
-	wget
+ENV NODE_ENV=production
+
+COPY package.json package-lock.json LICENSE ./
+
+RUN npm set-script prepare "" && \
+	npm install --production && \
+	npm cache clean --force
+
+
+### build image
+# Create an image to only build the package and copy to final image
+FROM base as build
+
+WORKDIR /home/wa-js-api-server
+
+COPY package.json package-lock.json ./
+
+# install the devDependencies
+RUN npm set-script prepare "" && \
+	npm install --production=false
 
 COPY . .
 
-RUN git pull && \
-	npm install && \
-	npm run build
+RUN npm run build
+
+
+### final image
+FROM base
+
+LABEL version="1.0.0" description="WPPConnectLinkPreview" maintainer="Alan Martines<alancpmartines@hotmail.com>"
+
+WORKDIR /home/wa-js-api-server
+
+COPY --from=build /home/wa-js-api-server/dist /home/wa-js-api-server/dist/
 
 EXPOSE 8000/tcp
 
