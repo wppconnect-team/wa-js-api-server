@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { createCanvas } from 'canvas';
+import { toPng } from '@rgba-image/png';
 
 export function encodeToPng(content: ArrayBufferView | string) {
   if (typeof content === 'string') {
@@ -33,11 +33,8 @@ export function encodeToPng(content: ArrayBufferView | string) {
   const width = Math.ceil(Math.sqrt((length + headerSize) / 3));
   const height = width;
 
-  // Create a image
-  const canvas = createCanvas(width, height);
-  const context = canvas.getContext('2d');
-  const imageData = context.getImageData(0, 0, width, height);
-  const data = imageData.data;
+  // Create a image data
+  const data = new Uint8ClampedArray(width * height * 4);
 
   // 1 byte for type or future use
   // 8 bytes for size;
@@ -71,7 +68,11 @@ export function encodeToPng(content: ArrayBufferView | string) {
     o += 4;
   }
 
-  context.putImageData(imageData, 0, 0);
+  const encodedPng = toPng({
+    data,
+    height,
+    width,
+  });
 
-  return canvas.toBuffer('image/png');
+  return encodedPng;
 }
