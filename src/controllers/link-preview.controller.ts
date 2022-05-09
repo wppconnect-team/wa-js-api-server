@@ -56,6 +56,7 @@ export class LinkPreviewController {
     const preview = await getLinkPreview(url, {
       headers: {
         'Accept-Language': acceptLanguage,
+        'User-Agent': 'WhatsApp/2.2214.12 N',
       },
     });
 
