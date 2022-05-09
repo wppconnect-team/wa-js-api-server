@@ -91,6 +91,7 @@ docker run -d -p 8000:8000 --name WPPconnectLinkPreview \
 	-e CACHE_MAX_SIZE=104857600 \
 	-e CACHE_TTL=3600000 \
 	-e TRUST_PROXY=1 \
+	-e USER_AGENT='WhatsApp/2.2214.12 N' \
 wppconnect/wa-js-api-server:1.0.0
 ```
 

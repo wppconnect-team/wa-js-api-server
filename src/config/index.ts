@@ -34,6 +34,7 @@ const env = cleanEnv(process.env, {
   ORIGIN: str({ default: 'https://web.whatsapp.com' }),
   PORT: port({ default: 8000 }),
   TRUST_PROXY: str<string>({ default: '1' }),
+  USER_AGENT: str<string>({ default: 'WhatsApp/2.2214.12 N' }),
 });
 
 export const {
@@ -46,4 +47,5 @@ export const {
   ORIGIN,
   PORT,
   TRUST_PROXY,
+  USER_AGENT,
 } = env;

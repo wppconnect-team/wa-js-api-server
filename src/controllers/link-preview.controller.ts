@@ -25,6 +25,7 @@ import {
   Res,
 } from 'routing-controllers';
 
+import { USER_AGENT } from '../config';
 import { HttpException } from '../exceptions/HttpException';
 import { cache } from '../utils/cache';
 import { encodeToPng } from '../utils/encodeToPng';
@@ -56,7 +57,7 @@ export class LinkPreviewController {
     const preview = await getLinkPreview(url, {
       headers: {
         'Accept-Language': acceptLanguage,
-        'User-Agent': 'WhatsApp/2.2214.12 N',
+        'User-Agent': USER_AGENT,
       },
     });
 
@@ -116,7 +117,11 @@ export class LinkPreviewController {
     @QueryParam('url') url: string,
     @Res() response: Response
   ) {
-    const data = await fetch(url);
+    const data = await fetch(url, {
+      headers: {
+        'User-Agent': USER_AGENT,
+      },
+    });
 
     if (!data.ok) {
       throw new HttpException(404, `image not found for "${url}"`);
