@@ -18,6 +18,7 @@ services:
       CACHE_MAX_ITEMS: ${CACHE_MAX_ITEMS:-500}
       CACHE_MAX_SIZE: ${CACHE_MAX_SIZE:-104857600}
       CACHE_TTL: ${CACHE_TTL:-3600000}
+      TRUST_PROXY: ${TRUST_PROXY:-1}
     ports:
       - ${PORT:-8000}:8000
 #

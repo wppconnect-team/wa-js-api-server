@@ -26,7 +26,7 @@ import { getMetadataArgsStorage, useExpressServer } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
 import swaggerUi from 'swagger-ui-express';
 
-import { LOG_FORMAT, NODE_ENV, ORIGIN, PORT } from './config';
+import { LOG_FORMAT, NODE_ENV, ORIGIN, PORT, TRUST_PROXY } from './config';
 import errorMiddleware from './middlewares/error.middleware';
 import { logger, stream } from './utils/logger';
 
@@ -41,6 +41,7 @@ class App {
     this.port = PORT || 8000;
 
     this.initializeMiddlewares();
+    this.initializeConfigs();
     this.initializeRoutes(Controllers);
     this.initializeSwagger(Controllers);
     this.initializeErrorHandling();
@@ -64,6 +65,16 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+  }
+
+  private initializeConfigs() {
+    if (/^\d+$/.test(TRUST_PROXY)) {
+      this.app.set('trust proxy', parseInt(TRUST_PROXY));
+    } else {
+      this.app.set('trust proxy', TRUST_PROXY);
+    }
+
+    console.log(this.app.get('trust proxy'));
   }
 
   private initializeRoutes(controllers: Function[]) {
