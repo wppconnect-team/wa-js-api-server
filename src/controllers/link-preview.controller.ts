@@ -15,7 +15,7 @@
  */
 
 import { Response } from 'express';
-import { getLinkPreview } from 'link-preview-js';
+import getMetaData from 'metadata-scraper';
 import fetch from 'node-fetch';
 import {
   Controller,
@@ -38,6 +38,7 @@ interface LinkPreviewData {
   mediaType: string;
   contentType?: string;
   image?: string;
+  icon?: string;
 }
 
 @Controller('/v1/link-preview')
@@ -54,11 +55,10 @@ export class LinkPreviewController {
       return cache.get<LinkPreviewData>(key) || null;
     }
 
-    const preview = await getLinkPreview(url, {
-      headers: {
-        'Accept-Language': acceptLanguage,
-        'User-Agent': USER_AGENT,
-      },
+    const preview = await getMetaData({
+      url,
+      lang: acceptLanguage,
+      ua: USER_AGENT,
     });
 
     if (!preview || !('title' in preview)) {
@@ -66,13 +66,14 @@ export class LinkPreviewController {
     }
 
     const result = {
-      url: preview.url,
+      url: preview.url!,
       originalUrl: url,
-      title: preview.title,
+      title: preview.title!,
       description: preview.description,
-      mediaType: preview.mediaType,
-      contentType: preview.contentType,
-      image: preview.images[0] || preview.favicons[0],
+      mediaType: preview.type!,
+      contentType: (preview.contentType as string) || 'text/html',
+      image: preview.image || preview.icon,
+      icon: preview.icon,
     };
 
     cache.set(key, result);
@@ -165,6 +166,6 @@ export class LinkPreviewController {
 
     response.writeHead(200, headers);
 
-    return data.body.pipe(response);
+    return data.body?.pipe(response);
   }
 }
