@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import fetch from 'cross-fetch';
 import { Response } from 'express';
 import { getLinkPreview } from 'link-preview-js';
+import fetch from 'node-fetch';
 import {
   Controller,
   Get,
@@ -116,16 +116,14 @@ export class LinkPreviewController {
     @QueryParam('url') url: string,
     @Res() response: Response
   ) {
-    const head = await fetch(url, {
-      method: 'HEAD',
-    });
+    const data = await fetch(url);
 
-    if (!head.ok) {
-      throw new HttpException(404, `URL "${url}" was not found`);
+    if (!data.ok) {
+      throw new HttpException(404, `image not found for "${url}"`);
     }
 
     const mimeType =
-      head.headers.get('content-type') || 'application/octet-stream';
+      data.headers.get('content-type') || 'application/octet-stream';
 
     if (!/^image\//.test(mimeType)) {
       throw new HttpException(
@@ -134,26 +132,16 @@ export class LinkPreviewController {
       );
     }
 
-    const data = await fetch(url);
-
-    if (!data.ok) {
-      throw new HttpException(404, `image not found for "${url}"`);
-    }
-
-    const arrayBuffer = await data.arrayBuffer();
-
-    const buffer = Buffer.from(arrayBuffer);
-
     const headers: { [key: string]: string } = {};
     if (data.headers.has('Content-Type')) {
       headers['Content-Type'] = data.headers.get('Content-Type')!;
     }
+    if (data.headers.has('Content-Length')) {
+      headers['Content-Length'] = data.headers.get('Content-Length')!;
+    }
 
-    response.writeHead(200, {
-      'Content-Length': buffer.length,
-      ...headers,
-    });
+    response.writeHead(200, headers);
 
-    return response.end(buffer);
+    return data.body.pipe(response);
   }
 }
