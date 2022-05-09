@@ -35,7 +35,7 @@ const errorMiddleware = (
     logger.error(
       `[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${message}`
     );
-    res.status(status).json({ message });
+    res.status(status).json({ status, message, error: true });
   } catch (error) {
     next(error);
   }

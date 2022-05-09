@@ -85,13 +85,31 @@ export class LinkPreviewController {
     @QueryParam('url') url: string,
     @HeaderParam('Accept-Language') acceptLanguage?: string
   ) {
-    const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
+    try {
+      const preview = await this.fetchLinkPreviewData(url, acceptLanguage);
 
-    if (!preview) {
-      throw new HttpException(404, `Preview link not found for "${url}"`);
+      if (!preview) {
+        return {
+          status: 404,
+          message: `Preview link not found for "${url}"`,
+          error: true,
+        };
+      }
+
+      return {
+        status: 200,
+        ...preview,
+      };
+    } catch (error: any) {
+      const status: number = error.status || 500;
+      const message: string = error.message || 'Something went wrong';
+
+      return {
+        status,
+        message,
+        error: true,
+      };
     }
-
-    return preview;
   }
 
   @Get('/fetch-data.png')
