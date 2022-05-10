@@ -24,6 +24,7 @@ import {
   QueryParam,
   Res,
 } from 'routing-controllers';
+import { PassThrough } from 'stream';
 
 import { USER_AGENT } from '../config';
 import { HttpException } from '../exceptions/HttpException';
@@ -123,12 +124,14 @@ export class LinkPreviewController {
 
     const buffer = encodeToPng(JSON.stringify(preview));
 
-    response.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Length': buffer.length,
-    });
+    const readStream = new PassThrough();
 
-    return response.end(buffer);
+    readStream.end(buffer);
+
+    response.setHeader('Content-Type', 'image/png');
+    response.setHeader('Content-Length', buffer.length);
+
+    return readStream.pipe(response);
   }
 
   @Get('/download-image')
