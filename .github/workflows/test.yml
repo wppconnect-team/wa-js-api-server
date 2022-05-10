@@ -1,4 +1,4 @@
-name: build
+name: test
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,3 +37,12 @@ jobs:
 
       - name: Build source
         run: npm run build
+
+      - name: Run the API test
+        run: |
+          npm run start &
+          sleep 5
+          curl --fail "http://localhost:8000/v1/link-preview/fetch-data.png?url=https://www.youtube.com" --output /dev/null
+          curl --fail "http://localhost:8000/v1/link-preview/fetch-data.json?url=https://www.youtube.com"
+          curl --fail "http://localhost:8000/v1/link-preview/download-image?url=https://www.youtube.com/img/desktop/yt_1200.png" --output /dev/null
+          kill -9 `lsof -i:8000 -t`
