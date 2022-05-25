@@ -48,7 +48,7 @@
     "winston-daily-rotate-file": "^4.6.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.0",
+    "@commitlint/cli": "^17.0.1",
     "@commitlint/config-conventional": "^17.0.0",
     "@commitlint/prompt-cli": "^17.0.0",
     "@types/body-parser": "^1.19.2",
