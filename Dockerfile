@@ -9,7 +9,7 @@ WORKDIR /home/wa-js-api-server
 
 ENV NODE_ENV=production
 
-COPY package.json package-lock.json LICENSE ./
+COPY .npmrc package.json package-lock.json LICENSE ./
 
 RUN npm set-script prepare "" && \
 	npm install --production && \
@@ -22,7 +22,7 @@ FROM base as build
 
 WORKDIR /home/wa-js-api-server
 
-COPY package.json package-lock.json ./
+COPY .npmrc package.json package-lock.json ./
 
 # install the devDependencies
 RUN npm set-script prepare "" && \
