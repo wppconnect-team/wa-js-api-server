@@ -72,7 +72,8 @@ export function encodeToPng(content: ArrayBufferView | string) {
     data,
     height,
     width,
-  });
+    colorSpace: 'srgb',
+  } as any);
 
   return encodedPng;
 }
