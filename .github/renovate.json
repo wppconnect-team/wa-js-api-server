@@ -24,6 +24,10 @@
       "addLabels": ["javascript"]
     },
     {
+      "matchManagers": ["dockerfile"],
+      "addLabels": ["docker"]
+    },
+    {
       "matchDepTypes": ["devDependencies"],
       "semanticCommitScope": "deps-dev"
     },
@@ -37,6 +41,12 @@
     {
       "description": "Ignore major version",
       "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<17"
+    },
+    {
+      "description": "Ignore major version",
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["node"],
       "allowedVersions": "<17"
     },
     {
