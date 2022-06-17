@@ -1,6 +1,6 @@
 ### base image
 # Create an intermediate image for build speed with production dependencies
-FROM node:16-alpine as base
+FROM node:18-alpine as base
 
 RUN mkdir -p /home/wa-js-api-server && \
 	mkdir -p /home/wa-js-api-server/logs
