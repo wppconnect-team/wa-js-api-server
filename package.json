@@ -55,7 +55,7 @@
     "@types/lru-cache": "^7.10.10",
     "@types/morgan": "^1.9.3",
     "@types/multer": "^1.4.7",
-    "@types/node": "^16.11.46",
+    "@types/node": "^16.11.47",
     "@types/node-fetch": "^2.6.2",
     "@types/pngjs": "^6.0.1",
     "@types/swagger-ui-express": "^4.1.3",
