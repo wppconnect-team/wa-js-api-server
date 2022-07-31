@@ -15,6 +15,7 @@
  */
 
 import { Response } from 'express';
+import { decode } from 'html-entities';
 import getMetaData from 'metadata-scraper';
 import fetch from 'node-fetch';
 import {
@@ -64,6 +65,14 @@ export class LinkPreviewController {
 
     if (!preview || !('title' in preview)) {
       return null;
+    }
+
+    if (preview.title) {
+      preview.title = decode(preview.title);
+    }
+
+    if (preview.description) {
+      preview.description = decode(preview.description);
     }
 
     const result = {
