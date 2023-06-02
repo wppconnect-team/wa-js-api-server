@@ -43,7 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.10.4",
     "routing-controllers-openapi": "^3.1.0",
-    "swagger-ui-express": "^4.5.0",
+    "swagger-ui-express": "^4.6.3",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1"
   },
