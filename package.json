@@ -37,7 +37,7 @@
     "lru-cache": "^7.14.0",
     "metadata-scraper": "^0.2.61",
     "morgan": "^1.10.0",
-    "multer": "^1.4.4",
+    "multer": "^2.0.0",
     "node-fetch": "^2.6.11",
     "pngjs": "^6.0.0",
     "reflect-metadata": "^0.1.13",
