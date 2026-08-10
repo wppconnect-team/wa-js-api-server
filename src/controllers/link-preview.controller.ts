@@ -54,7 +54,7 @@ export class LinkPreviewController {
     const key = `${url} - ${acceptLanguage}`;
 
     if (cache.has(key)) {
-      return cache.get<LinkPreviewData>(key) || null;
+      return (cache.get(key) as LinkPreviewData | undefined) || null;
     }
 
     const preview = await getMetaData({
