@@ -79,6 +79,6 @@
     "@babel/traverse": "7.23.2",
     "basic-ftp": "5.2.1",
     "form-data": "4.0.4",
-    "koa": "2.15.4"
+    "koa": "2.16.4"
   }
 }
