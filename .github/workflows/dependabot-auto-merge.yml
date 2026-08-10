@@ -12,7 +12,7 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@v1.1.2
+        uses: lewagon/wait-on-check-action@v1.9.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,16 +21,16 @@ jobs:
 
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v1.3.6
+        uses: dependabot/fetch-metadata@v3.1.0
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Enable auto-merge for Dependabot PRs
         if: >-
-          ${{steps.metadata.outputs.update-type == 'version-update:semver-patch'
-          || contains(steps.metadata.outputs.dependency-names, '@types')}}
-          || contains(steps.metadata.outputs.dependency-names, 'commitlint')}}
-          || contains(steps.metadata.outputs.dependency-names, 'eslint')}}
+          ${{ steps.metadata.outputs.update-type == 'version-update:semver-patch'
+          || contains(steps.metadata.outputs.dependency-names, '@types')
+          || contains(steps.metadata.outputs.dependency-names, 'commitlint')
+          || contains(steps.metadata.outputs.dependency-names, 'eslint') }}
         run: gh pr merge --squash "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
