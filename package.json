@@ -25,7 +25,7 @@
   "dependencies": {
     "@rgba-image/png": "^0.1.1",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0",
+    "class-validator": "^0.15.1",
     "class-validator-jsonschema": "^4.0.0",
     "cors": "^2.8.6",
     "dotenv": "^16.1.3",
