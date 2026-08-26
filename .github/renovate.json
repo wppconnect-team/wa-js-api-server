@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":prHourlyLimitNone", ":semanticCommits"],
+  "extends": ["config:recommended", ":prHourlyLimitNone", ":semanticCommits"],
   "prConcurrentLimit": 3,
   "lockFileMaintenance": {
     "enabled": true,
@@ -9,7 +9,7 @@
   "packageRules": [
     {
       "description": "Use bump strategy",
-      "matchPackagePatterns": ["*"],
+      "matchPackageNames": ["*"],
       "rangeStrategy": "bump",
       "semanticCommitType": "build",
       "labels": ["dependencies"]
