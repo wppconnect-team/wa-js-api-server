@@ -62,3 +62,35 @@ for (const name of ['undici-encoding.cjs', 'undici-deflate.cjs']) {
     assert.match(output, /"survived":true/);
   });
 }
+
+test('the proxy FTP consumer preserves transfers, caching and host restrictions', () => {
+  execFileSync(
+    process.execPath,
+    [path.join(__dirname, 'helpers/ftp-consumer.cjs'), root],
+    {
+      cwd: root,
+      timeout: 20000,
+    }
+  );
+});
+
+test('the FTP parser rejects a malformed listing without blocking', () => {
+  execFileSync(
+    process.execPath,
+    [path.join(__dirname, 'helpers/ftp-consumer.cjs'), root, 'attack'],
+    {
+      cwd: root,
+      timeout: 3000,
+    }
+  );
+});
+
+test('the Socks IPv6 parser bounds malformed zone scanning and retains ordinary addresses', () => {
+  const code = String.raw`const {createRequire}=require('node:module');
+    const owner=createRequire(require.resolve('socks'));
+    const {Address6}=owner('ip-address');
+    require('node:assert/strict').throws(()=>new Address6('fe80::1%'+'%'.repeat(65536)+'\ninvalid'));
+    require('node:assert/strict').equal(new Address6('::1').correctForm(),'::1');
+    require('node:assert/strict').equal(new Address6('fe80::1%eth0').zone,'%eth0');`;
+  execFileSync(process.execPath, ['-e', code], { cwd: root, timeout: 2000 });
+});
