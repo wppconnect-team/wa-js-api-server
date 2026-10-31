@@ -1,123 +1,103 @@
-<!-- wppconnect-official-brand -->
+**English** | [Português (Brasil)](./README.pt-BR.md)
+
 <p align="center">
-  <a href="https://wppconnect-team.github.io/">
+  <a href="https://wppconnect.io/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://wppconnect-team.github.io/brand/wppconnect-dark.png" />
       <img src="https://wppconnect-team.github.io/brand/wppconnect-light.png" alt="WPPConnect" width="220" height="121" />
     </picture>
   </a>
 </p>
-<!-- /wppconnect-official-brand -->
 
 # WPPConnect/WA-JS API SERVER
 
-[![npm version](https://img.shields.io/npm/v/@wppconnect/wa-js-api-server.svg?color=green)](https://www.npmjs.com/package/@wppconnect/wa-js-api-server)
-[![Downloads](https://img.shields.io/npm/dm/@wppconnect/wa-js-api-server.svg)](https://www.npmjs.com/package/@wppconnect/wa-js-api-server)
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/wppconnect-team/wa-js.svg)](https://isitmaintained.com/project/wppconnect/wa-js 'Average time to resolve an issue')
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/wppconnect-team/wa-js.svg)](https://isitmaintained.com/project/wppconnect/wa-js 'Percentage of issues still open')
+Serve URL-preview metadata and PNG payloads for WA-JS integrations.
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/wppconnect-team/wa-js/build.yml?branch=main)](https://github.com/wppconnect-team/wa-js/actions/workflows/build.yml)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/wppconnect-team/wa-js/test.yml?branch=main)](https://github.com/wppconnect-team/wa-js/actions/workflows/test.yml)
-[![Lint Status](https://img.shields.io/github/actions/workflow/status/wppconnect-team/wa-js/lint.yml?branch=main&label=lint)](https://github.com/wppconnect-team/wa-js/actions/workflows/lint.yml)
-[![release-it](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-release--it-e10079.svg)](https://github.com/release-it/release-it)
+A project in the WPPConnect ecosystem, maintained by WPPConnect Team.
 
-> WPPConnect/WA-JS API SERVER is a small api server to provide url preview for @wppconnect/wa-js library
+[Getting started](#getting-started) | [Documentation](#documentation) | [Contributing](#contributing) | [Support WPPConnect](#support-the-project)
 
-## Our online channels
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](./LICENSE) [![CI](https://github.com/wppconnect-team/wa-js-api-server/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/wppconnect-team/wa-js-api-server/actions/workflows/test.yml) [![Documentation](https://img.shields.io/badge/docs-WPPConnect-blue)](https://wppconnect.io/) [![Open Collective](https://img.shields.io/badge/Open%20Collective-WPPConnect-blue)](https://opencollective.com/wppconnect)
 
-[![Discord](https://img.shields.io/discord/844351092758413353?color=blueviolet&label=Discord&logo=discord&style=flat)](https://discord.gg/JU5JGGKGNG)
-[![Telegram Group](https://img.shields.io/badge/Telegram-Group-32AFED?logo=telegram)](https://t.me/wppconnect)
-[![WhatsApp Group](https://img.shields.io/badge/WhatsApp-Group-25D366?logo=whatsapp)](https://chat.whatsapp.com/LJaQu6ZyNvnBPNAVRbX00K)
-[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCD7J9LG08PmGQrF5IS7Yv9A?label=YouTube)](https://www.youtube.com/c/wppconnect)
+## Overview
 
-## How does it work
+For operators who need the companion link-preview service used by browser integrations. This is a URL-preview API, separate from the WhatsApp session/message Server. The manifest package name exists in source but was not found in the npm registry during this review; use source installation.
 
-This project generate PNG images from JSON respose for URL preview.
+## Features
 
-## Starting
+- Fetch link metadata and encode preview data as PNG.
+- Configurable cache, CORS origin, logging and generated Swagger UI.
 
-Steps to run locally:
+## Getting started
 
-```bash
-# checkout the project
+Use Node.js and npm. No minimum runtime is declared; the existing Dockerfile uses the legacy Node 16 image, so its runtime needs maintainer review before deployment.
+
+```sh
 git clone https://github.com/wppconnect-team/wa-js-api-server.git
-
-# enter in the folder
 cd wa-js-api-server
-
-# if you want to get the updates
-git pull
-
-# install the depencencies
-npm install
-
-# build javascript files
+npm ci
 npm run build
-
-# if you want to change some configuration, you can set en ENVIRONMENT variables or copy the .env to .env.local
-# cp .env .env.local
-
-# lauch local server
-node ./dist/server.js
+npm start
 ```
 
-## Docker-Compose
+In another terminal, `curl http://localhost:8000/status` returns `OK`. Open `http://localhost:8000/api-docs` for the preview routes.
 
-```bash
-# checkout the project
-git clone https://github.com/wppconnect-team/wa-js-api-server.git
+## Configuration
 
-# enter in the folder
-cd wa-js-api-server
+Environment variables include `PORT` (8000), `ORIGIN`, `CACHE_MAX_ITEMS`, `CACHE_MAX_SIZE`, `CACHE_TTL`, `TRUST_PROXY`, `USER_AGENT`, `LOG_DIR` and `LOG_FORMAT`. See [src/config/index.ts](src/config/index.ts) for defaults and `.env` loading. Configure allowed callers and review URL-fetching exposure before making the service public.
 
-# if you want to change some configuration, you can set en ENVIRONMENT variables or copy the .env to .env.local
-# cp .env .env.local
+## Documentation
 
-# create container
-docker-compose -f docker-compose.yml up --build -d
+- [Preview controller](./src/controllers/link-preview.controller.ts)
+- [Docker Compose configuration](./docker-compose.yml)
+- [Retained technical details and acknowledgments](documentation/readme-reference.md)
+
+## WPPConnect ecosystem
+
+| Project | Purpose | When to use it |
+| --- | --- | --- |
+| [WPPConnect/WA-JS](https://github.com/wppconnect-team/wa-js) | Expose WhatsApp Web functions through the browser-side `WPP` API. | Run browser-side code in WhatsApp Web. |
+| [WPPConnect Server](https://github.com/wppconnect-team/wppconnect-server) | Run a REST API for WhatsApp sessions, messages and webhooks. | Expose session and messaging operations over HTTP. |
+
+## Support the project
+
+WPPConnect is maintained by an open-source community. Your support helps fund maintenance, infrastructure, documentation, and the people working on the ecosystem.
+
+If WPPConnect helps your project or business, consider making a one-time contribution or becoming a recurring supporter.
+
+**[Support WPPConnect on Open Collective](https://opencollective.com/wppconnect)**
+
+Contributions are voluntary. See the official page for current financial information. You can also help with code, tests, documentation, translations and well-described issue reports.
+
+Additional official beneficiaries in [.github/FUNDING.yml](.github/FUNDING.yml): [joaosouz4dev](https://github.com/sponsors/joaosouz4dev), [manfe](https://github.com/sponsors/manfe).
+
+## Contributing
+
+Contributions of code, tests, examples, documentation and translations are welcome. For larger changes, discuss the approach in an issue first. Include the project/runtime versions, a minimal reproduction and sanitized logs when reporting a problem. Update both `README.md` and `README.pt-BR.md` in the same change when installation, configuration, features, examples, licensing or funding changes.
+
+After installing the development dependencies, use the repository checks relevant to your change:
+
+```sh
+npm run build
+npm run lint
 ```
 
-## Dockerfile
+Account-dependent examples and tests require separate validation with an authorized test account. Never attach credentials or session files to an issue.
 
-```bash
-# checkout the project
-git clone https://github.com/wppconnect-team/wa-js-api-server.git
+## Community and support
 
-# enter in the folder
-cd wa-js-api-server
+Use [repository issues](https://github.com/wppconnect-team/wa-js-api-server/issues) for reproducible bugs and feature proposals. For usage questions, join the community through the official channels:
 
-# create image
-docker build -t wppconnect/wa-js-api-server:1.0.0 -f Dockerfile .
+- [Discord](https://discord.gg/JU5JGGKGNG)
+- [Telegram](https://t.me/wppconnect)
+- [YouTube](https://www.youtube.com/c/wppconnect)
 
-# create container
-# if you want to change some setting you can set ENVIRONMENT variables
-docker run -d -p 8000:8000 --name WPPconnectLinkPreview \
-  --restart=always \
-	-e NODE_ENV=production \
-	-e PORT=8000 \
-	-e LOG_FORMAT=combined \
-	-e LOG_DIR='./logs' \
-	-e ORIGIN='https://web.whatsapp.com' \
-	-e CACHE_MAX_ITEMS=500 \
-	-e CACHE_MAX_SIZE=104857600 \
-	-e CACHE_TTL=3600000 \
-	-e TRUST_PROXY=1 \
-	-e USER_AGENT='WhatsApp/2.2214.12 N' \
-wppconnect/wa-js-api-server:1.0.0
-```
+This project is independent and is not affiliated with or endorsed by WhatsApp or Meta. Follow applicable terms and obtain authorization for account and messaging operations.
 
 ## License
 
-Copyright 2021 WPPConnect Team
+[Apache License 2.0 (Apache-2.0)](./LICENSE).
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Copyright 2021 WPPConnect Team.
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+The original legal document and existing copyright notices are preserved. Third-party components retain their own terms.
