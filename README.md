@@ -3,8 +3,8 @@
 <p align="center">
   <a href="https://wppconnect.io/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://wppconnect-team.github.io/brand/wppconnect-dark.png" />
-      <img src="https://wppconnect-team.github.io/brand/wppconnect-light.png" alt="WPPConnect" width="220" height="121" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://wppconnect-team.github.io/brand/v2/wppconnect-dark.png" />
+      <img src="https://wppconnect-team.github.io/brand/v2/wppconnect-light.png" alt="WPPConnect" width="220" height="121" />
     </picture>
   </a>
 </p>
@@ -54,10 +54,10 @@ Environment variables include `PORT` (8000), `ORIGIN`, `CACHE_MAX_ITEMS`, `CACHE
 
 ## WPPConnect ecosystem
 
-| Project | Purpose | When to use it |
-| --- | --- | --- |
-| [WPPConnect/WA-JS](https://github.com/wppconnect-team/wa-js) | Expose WhatsApp Web functions through the browser-side `WPP` API. | Run browser-side code in WhatsApp Web. |
-| [WPPConnect Server](https://github.com/wppconnect-team/wppconnect-server) | Run a REST API for WhatsApp sessions, messages and webhooks. | Expose session and messaging operations over HTTP. |
+| Project                                                                   | Purpose                                                           | When to use it                                     |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| [WPPConnect/WA-JS](https://github.com/wppconnect-team/wa-js)              | Expose WhatsApp Web functions through the browser-side `WPP` API. | Run browser-side code in WhatsApp Web.             |
+| [WPPConnect Server](https://github.com/wppconnect-team/wppconnect-server) | Run a REST API for WhatsApp sessions, messages and webhooks.      | Expose session and messaging operations over HTTP. |
 
 ## Support the project
 

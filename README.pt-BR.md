@@ -3,8 +3,8 @@
 <p align="center">
   <a href="https://wppconnect.io/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://wppconnect-team.github.io/brand/wppconnect-dark.png" />
-      <img src="https://wppconnect-team.github.io/brand/wppconnect-light.png" alt="WPPConnect" width="220" height="121" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://wppconnect-team.github.io/brand/v2/wppconnect-dark.png" />
+      <img src="https://wppconnect-team.github.io/brand/v2/wppconnect-light.png" alt="WPPConnect" width="220" height="121" />
     </picture>
   </a>
 </p>
@@ -54,10 +54,10 @@ As variáveis incluem `PORT` (8000), `ORIGIN`, `CACHE_MAX_ITEMS`, `CACHE_MAX_SIZ
 
 ## Ecossistema WPPConnect
 
-| Projeto | Finalidade | Quando usar |
-| --- | --- | --- |
-| [WPPConnect/WA-JS](https://github.com/wppconnect-team/wa-js) | Exponha funções do WhatsApp Web pela API `WPP` no navegador. | Executar código no navegador dentro do WhatsApp Web. |
-| [WPPConnect Server](https://github.com/wppconnect-team/wppconnect-server) | Execute uma API REST para sessões, mensagens e webhooks do WhatsApp. | Expor operações de sessão e mensagens por HTTP. |
+| Projeto                                                                   | Finalidade                                                           | Quando usar                                          |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------- |
+| [WPPConnect/WA-JS](https://github.com/wppconnect-team/wa-js)              | Exponha funções do WhatsApp Web pela API `WPP` no navegador.         | Executar código no navegador dentro do WhatsApp Web. |
+| [WPPConnect Server](https://github.com/wppconnect-team/wppconnect-server) | Execute uma API REST para sessões, mensagens e webhooks do WhatsApp. | Expor operações de sessão e mensagens por HTTP.      |
 
 ## Apoie o projeto
 
