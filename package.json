@@ -90,6 +90,12 @@
     "ip-address": "10.7.4",
     "parse-url": {
       "@types/parse-path": "7.0.3"
+    },
+    "routing-controllers": {
+      "glob": {
+        ".": "14.0.6",
+        "minimatch": "11.0.9"
+      }
     }
   }
 }

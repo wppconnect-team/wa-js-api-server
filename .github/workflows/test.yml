@@ -41,6 +41,9 @@ jobs:
       - name: Test release HTTP dependency
         run: node --test test/undici-security.cjs
 
+      - name: Test controller glob loading
+        run: node --test test/routing-controller-glob.cjs
+
       - name: Build source
         run: npm run build
 
