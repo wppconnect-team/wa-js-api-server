@@ -87,6 +87,9 @@
     "release-it": {
       "undici": "7.30.1"
     },
-    "ip-address": "10.7.4"
+    "ip-address": "10.7.4",
+    "parse-url": {
+      "@types/parse-path": "7.0.3"
+    }
   }
 }
